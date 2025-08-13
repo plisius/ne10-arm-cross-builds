@@ -24,12 +24,12 @@ jobs:
           gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
           cmake git make \
           qemu-user qemu-user-static
+    
+      - name: Verify qemu-arm installation
+        run: qemu-arm --version
 
-      - name: Setup files for building Ne10 benchmark
-        run: |
-          # Копируем исходник бенчмарка ne10_bench.c в рабочую папку, если у вас есть отдельный файл
-          # Иначе он может быть автоматически взят из Ne10/examples при сборке
-          cp ne10_bench.c .
+      - name: Copy ne10_bench.c to scripts
+        run: cp ne10_bench.c scripts/
 
       - name: Build ARMv7-A (hard float)
         run: echo "1" | ./scripts/ne10_build_armv7a_soft_hard.sh
@@ -42,11 +42,13 @@ jobs:
 
       - name: Run ARMv7 hard float benchmark in QEMU
         run: |
-          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_ne10_armv7a_hard_float $ITERATIONS > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
+          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_ne10_armv7a_hard_float $ITERATIONS \
+            > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
 
       - name: Run ARMv7 soft float benchmark in QEMU
         run: |
-          qemu-arm -L /usr/arm-linux-gnueabi bin/ne10_bench_ne10_armv7a_soft_float $ITERATIONS > bin/qemu_bench_armv7_soft.log 2>&1 || echo "QEMU returned error, but continuing"
+          qemu-arm -L /usr/arm-linux-gnueabi bin/ne10_bench_ne10_armv7a_soft_float $ITERATIONS \
+            > bin/qemu_bench_armv7_soft.log 2>&1 || echo "QEMU returned error, but continuing"
 
       - name: Upload ARMv7 binaries
         uses: actions/upload-artifact@v4
