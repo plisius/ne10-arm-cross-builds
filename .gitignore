@@ -1,0 +1,40 @@
+# Бинарные и временные файлы сборки
+*.o
+*.a
+*.so
+*.bin
+*.out
+*.exe
+
+# Логи и отладочные файлы
+*.log
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Архивы и пакеты
+*.tar
+*.tar.gz
+*.zip
+
+# Файлы и каталоги исходников FFTW
+fftw-*/
+fftw-*.tar.gz
+
+# Бинарники бенчмарков
+fftw_bench_arm*
+
+# Артефакты кросс-компиляторов
+/usr/arm-linux-gnueabi*
+/usr/arm-linux-gnueabihf*
+
+# Результаты и мусорные файлы в scripts/
+scripts/fftw_bench_arm*
+scripts/*.out
+scripts/*.log
+
+# Системные каталоги и IDE
+.DS_Store
+.idea
+.vscode
