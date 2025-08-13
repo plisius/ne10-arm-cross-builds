@@ -1,0 +1,58 @@
+name: Ne10 ARM Builds and Benchmark
+
+on:
+  push:
+  pull_request:
+
+env:
+  ITERATIONS: 10  # количество итераций запуска бенчмарка
+
+jobs:
+  build-armv7:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cross-compile tools and QEMU for ARMv7
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+          gcc-arm-linux-gnueabi g++-arm-linux-gnueabi \
+          gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
+          cmake git make \
+          qemu-user qemu-user-static
+
+      - name: Setup files for building Ne10 benchmark
+        run: |
+          # Копируем исходник бенчмарка ne10_bench.c в рабочую папку, если у вас есть отдельный файл
+          # Иначе он может быть автоматически взят из Ne10/examples при сборке
+          cp ne10_bench.c .
+
+      - name: Build ARMv7-A (hard float)
+        run: echo "1" | ./scripts/ne10_build_armv7a_soft_hard.sh
+
+      - name: Build ARMv7-A (soft float)
+        run: echo "2" | ./scripts/ne10_build_armv7a_soft_hard.sh
+
+      - name: List files in bin
+        run: ls -la bin/
+
+      - name: Run ARMv7 hard float benchmark in QEMU
+        run: |
+          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_ne10_armv7a_hard_float $ITERATIONS > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
+
+      - name: Run ARMv7 soft float benchmark in QEMU
+        run: |
+          qemu-arm -L /usr/arm-linux-gnueabi bin/ne10_bench_ne10_armv7a_soft_float $ITERATIONS > bin/qemu_bench_armv7_soft.log 2>&1 || echo "QEMU returned error, but continuing"
+
+      - name: Upload ARMv7 binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ne10-binaries-armv7
+          path: bin/ne10_bench_ne10_armv7a_*
+
+      - name: Upload ARMv7 QEMU logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ne10-benchmark-logs-armv7
+          path: bin/qemu_bench_armv7_*.log
