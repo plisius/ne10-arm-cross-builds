@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
         clock_gettime(CLOCK_MONOTONIC, &start);
         for (int i = 0; i < iterations; i++) {
-            ne10_fft_c2c_1d_float32(in, out, cfg, 0); // прямое FFT
+            ne10_fft_c2c_1d_float32_neon(in, out, cfg, 0); // прямое FFT
         }
         clock_gettime(CLOCK_MONOTONIC, &end);
 
