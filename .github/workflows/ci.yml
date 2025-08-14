@@ -42,7 +42,7 @@ jobs:
 
       - name: Run ARMv7 hard float benchmark in QEMU
         run: |
-          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_ne10_armv7a_hard_float $ITERATIONS \
+          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_armv7a_hard_float $ITERATIONS \
             > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
 
       # - name: Run ARMv7 soft float benchmark in QEMU
