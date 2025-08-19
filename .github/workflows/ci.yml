@@ -32,7 +32,9 @@ jobs:
       #   run: cd scripts/
 
       - name: Build ARMv7-A (hard float)
-        run: cd scripts/ ./ne10_build_armv7a_hard.sh
+        run: | 
+              cd scripts/ 
+              ./ne10_build_armv7a_hard.sh
 
       # - name: Build ARMv7-A (soft float)
       #   run: echo "2" | scripts/ne10_build_armv7a_hard.sh
