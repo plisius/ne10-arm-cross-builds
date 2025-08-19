@@ -39,10 +39,23 @@ fi
 
 # 4. Очистка и подготовка сборки
 cd "$NE10_SRC_DIR"
-unset CFLAGS CXXFLAGS
+unset CFLAGS
+unset CXXFLAGS
 
-# Удаляем любые -march= из CMake-файлов (чтобы избежать конфликтов)
-sed -i 's/-march=[^ ]*//g' CMakeLists.txt
+# 3. Аккуратно убираем проверки архитектуры, не повреждая CMakeLists.txt
+perl -pi -e '
+    if(/^if\(DEFINED NE10_IOS_TARGET_ARCH\)/../^endif\(\)/) {
+        s/^/# / unless /^# /;
+    }
+' CMakeLists.txt
+
+perl -pi -e '
+    if(/^if\(GNULINUX_PLATFORM AND \(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "\^arm"\)\)/../^endif\(\)/) {
+        s/^/# / unless /^# /;
+    }
+' CMakeLists.txt
+
+# 4. Удаляем только -march=... из всех .cmake файлов и CMakeLists.txt, чтобы избежать ошибок компиляции
 find . -type f \( -name "*.cmake" -o -name "CMakeLists.txt" \) -exec sed -i 's/-march=[^ ]*//g' {} +
 
 rm -rf build && mkdir build && cd build
@@ -69,12 +82,12 @@ cd ../..
 echo "$(pwd)"
 
 # 7. Компиляция бенчмарка
-if [ ! -f "../$BENCH_SOURCE" ]; then
+if [ ! -f "$BENCH_SOURCE" ]; then
   echo "! Файл $BENCH_SOURCE не найден рядом со скриптом!"
   exit 1
 fi
 
-${TARGET_TRIPLET}-gcc "../$BENCH_SOURCE" \
+${TARGET_TRIPLET}-gcc "$BENCH_SOURCE" \
     -INe10/inc -LNe10/build/modules -lNE10 -lm \
     -march=armv8-a -O3 -ffast-math \
     -o "${BUILD_NAME}"

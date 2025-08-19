@@ -82,7 +82,7 @@ cd ../..
 echo "$(pwd)"
 # --- 7. Компиляция бенчмарка ---
 BIN_NAME="${BUILD_NAME}"
-${TARGET_TRIPLET}-gcc "../$BENCH_SOURCE" \
+${TARGET_TRIPLET}-gcc "$BENCH_SOURCE" \
     -I${NE10_SRC_DIR}/inc \
     -L${NE10_SRC_DIR}/build/modules \
     -lNE10 -lm ${CFLAGS} -static \
