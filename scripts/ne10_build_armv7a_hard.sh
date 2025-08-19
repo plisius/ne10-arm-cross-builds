@@ -24,9 +24,8 @@ BENCH_SOURCE="ne10_bench.c"   # исходник бенчмарка
 TARGET_TRIPLET="arm-linux-gnueabihf"
 CFLAGS="-O3 -march=armv7-a -mfpu=neon -mfloat-abi=hard"
 NEON_FLAG="ON"
-BUILD_NAME="ne10_armv7a_hard_float"
+BUILD_NAME="ne10_bench_armv7a_hard_float"
 REQUIRED_PKGS=("gcc-arm-linux-gnueabihf" "g++-arm-linux-gnueabihf" "cmake" "git" "build-essential")
-
 
 # --- 1. Установка зависимостей ---
 for pkg in "${REQUIRED_PKGS[@]}"; do
