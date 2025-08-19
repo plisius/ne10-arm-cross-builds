@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  ITERATIONS: 10  # количество итераций запуска бенчмарка
+  ITERATIONS: 10
 
 jobs:
   build-armv7:
@@ -20,11 +20,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-          gcc-arm-linux-gnueabi g++-arm-linux-gnueabi \
-          gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
-          cmake git make \
-          qemu-user qemu-user-static
-    
+            gcc-arm-linux-gnueabi g++-arm-linux-gnueabi \
+            gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
+            cmake git make \
+            qemu-user qemu-user-static
+
       - name: Verify qemu-arm installation
         run: qemu-arm --version
 
@@ -32,37 +32,27 @@ jobs:
         run: cp ne10_bench.c scripts/
 
       - name: Build ARMv7-A (hard float)
-        run: ./scripts/ne10_build_armv8a_hard.sh
+        run: ./scripts/ne10_build_armv7a_hard.sh
 
-      # - name: Build ARMv7-A (soft float)
-      #   run: echo "2" | scripts/ne10_build_armv7a_hard.sh
-
-      - name: List files in bin
+      - name: List files in bin (ARMv7)
         run: ls -la bin/
 
       - name: Run ARMv7 hard float benchmark in QEMU
         run: |
-          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_armv7a_hard_float $ITERATIONS \
-            > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
-
-      # - name: Run ARMv7 soft float benchmark in QEMU
-      #   run: |
-      #     qemu-arm -L /usr/arm-linux-gnueabi bin/ne10_armv7a_soft_float $ITERATIONS \
-      #       > bin/qemu_bench_armv7_soft.log 2>&1 || echo "QEMU returned error, but continuing"
+          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_armv7a_hard_float $ITERATIONS \
+          > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
 
       - name: Upload ARMv7 binaries
         uses: actions/upload-artifact@v4
         with:
           name: ne10-binaries-armv7
-          path: bin/ne10_bench_armv7a_*
+          path: bin/ne10_bench_armv7a_hard_float
 
       - name: Upload ARMv7 QEMU logs
         uses: actions/upload-artifact@v4
         with:
           name: ne10-benchmark-logs-armv7
-          path: bin/qemu_bench_armv7_*.log
-
-
+          path: bin/qemu_bench_armv7_hard.log
 
   build-armv8:
     runs-on: ubuntu-latest
@@ -78,9 +68,9 @@ jobs:
           sudo apt-get install -y \
             gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
             gcc-arm-linux-gnueabi g++-arm-linux-gnueabi \
-          cmake git make \
-          qemu-user qemu-user-static
-    
+            cmake git make \
+            qemu-user qemu-user-static
+
       - name: Verify qemu-aarch64 installation
         run: qemu-aarch64 --version
 
@@ -90,32 +80,22 @@ jobs:
       - name: Build ARMv8-A (hard float)
         run: ./scripts/ne10_build_armv8a_hard.sh
 
-      # - name: Build ARMv7-A (soft float)
-      #   run: echo "2" | scripts/ne10_build_armv7a_hard.sh
-
-      - name: List files in bin
+      - name: List files in bin (ARMv8)
         run: ls -la bin/
 
       - name: Run ARMv8 hard float benchmark in QEMU
         run: |
-          qemu-aarch64 -L /usr/aarch64-linux-gnu bin/ne10_armv8a_hard_float $ITERATIONS \
-            > bin/qemu_bench_armv8_hard.log 2>&1 || echo "QEMU returned error, but continuing"
-
-      # - name: Run ARMv7 soft float benchmark in QEMU
-      #   run: |
-      #     qemu-arm -L /usr/arm-linux-gnueabi bin/ne10_armv7a_soft_float $ITERATIONS \
-      #       > bin/qemu_bench_armv7_soft.log 2>&1 || echo "QEMU returned error, but continuing"
+          qemu-aarch64 -L /usr/aarch64-linux-gnu bin/ne10_bench_armv8a_hard_float $ITERATIONS \
+          > bin/qemu_bench_armv8_hard.log 2>&1 || echo "QEMU returned error, but continuing"
 
       - name: Upload ARMv8 binaries
         uses: actions/upload-artifact@v4
         with:
           name: ne10-binaries-armv8
-          path: bin/ne10_bench_armv8a_*
+          path: bin/ne10_bench_armv8a_hard_float
 
       - name: Upload ARMv8 QEMU logs
         uses: actions/upload-artifact@v4
         with:
           name: ne10-benchmark-logs-armv8
-          path: bin/qemu_bench_armv8_*.log
-
-
+          path: bin/qemu_bench_armv8_hard.log
