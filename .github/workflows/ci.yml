@@ -54,7 +54,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ne10-binaries-armv7
-          path: bin/ne10_armv7a_*
+          path: bin/ne10_bench_armv7a_*
 
       - name: Upload ARMv7 QEMU logs
         uses: actions/upload-artifact@v4
@@ -110,7 +110,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ne10-binaries-armv8
-          path: bin/ne10_armv8a_*
+          path: bin/ne10_bench_armv8a_*
 
       - name: Upload ARMv8 QEMU logs
         uses: actions/upload-artifact@v4
