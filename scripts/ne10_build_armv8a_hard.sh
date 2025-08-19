@@ -59,22 +59,27 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../armv8-toolchain.cmake \
 make -j$(nproc)
 
 echo "Ne10 успешно собрана с максимальными оптимизациями для ARMv8!"
-# echo "$(pwd)"
+echo "$(pwd)"
 
 cd ..
 cd ..
+echo "$(pwd)"
 
 # 7. Компиляция вашего бенчмарка
-if [ ! -f "$BENCHMARK_SRC" ]; then
-  echo "! Файл $BENCHMARK_SRC не найден рядом со скриптом!"
+if [ ! -f "../$BENCHMARK_SRC" ]; then
+  echo "! Файл ../$BENCHMARK_SRC не найден рядом со скриптом!"
   exit 1
 fi
 
-
-aarch64-linux-gnu-gcc "$BENCHMARK_SRC" \
+# BENCHMARK_BIN
+# BIN_NAME="${BUILD_NAME}"
+aarch64-linux-gnu-gcc "../$BENCHMARK_SRC" \
     -INe10/inc -LNe10/build/modules -lNE10 -lm \
     -march=armv8-a -O3 -ffast-math \
     -o "$BENCHMARK_BIN"
 
-echo "=== Готово ==="
-echo "Файл для запуска на ARMv8: $BENCHMARK_BIN"
+
+# --- 8. Копирование бинарника ---
+mkdir -p bin
+mv "$BENCHMARK_BIN" "bin/$BENCHMARK_BIN"
+echo "✅ Готово: $(realpath bin/$BENCHMARK_BIN)"
