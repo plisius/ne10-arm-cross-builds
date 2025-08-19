@@ -28,11 +28,11 @@ jobs:
       - name: Verify qemu-arm installation
         run: qemu-arm --version
 
-      - name: Goto folder scripts
-        run: cd scripts/
+      # - name: Goto folder scripts
+      #   run: cd scripts/
 
       - name: Build ARMv7-A (hard float)
-        run: ./ne10_build_armv7a_hard.sh
+        run: ./scripts/ne10_build_armv7a_hard.sh
 
       # - name: Build ARMv7-A (soft float)
       #   run: echo "2" | scripts/ne10_build_armv7a_hard.sh
