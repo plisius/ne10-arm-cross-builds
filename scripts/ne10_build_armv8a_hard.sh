@@ -77,7 +77,8 @@ fi
 ${TARGET_TRIPLET}-gcc "../$BENCH_SOURCE" \
     -INe10/inc -LNe10/build/modules -lNE10 -lm \
     -march=armv8-a -O3 -ffast-math \
-    -o "../${BUILD_NAME}_bench"
+    -o "${BUILD_NAME}"
 
-echo "=== Готово ==="
-echo "Бинарник бенчмарка: ../${BUILD_NAME}_bench"
+mkdir -p bin
+mv "$BUILD_NAME" "bin/$BUILD_NAME"
+echo "✅ Готово: $(realpath bin/$BUILD_NAME)"

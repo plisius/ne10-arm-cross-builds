@@ -79,7 +79,7 @@ echo "Библиотека: Ne10/build/modules/libNE10.a"
 
 
 cd ../..
-
+echo "$(pwd)"
 # --- 7. Компиляция бенчмарка ---
 BIN_NAME="${BUILD_NAME}"
 ${TARGET_TRIPLET}-gcc "../$BENCH_SOURCE" \
