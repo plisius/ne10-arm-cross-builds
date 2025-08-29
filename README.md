@@ -62,12 +62,9 @@
 ```bash
 chmod +x scripts/*.sh
 ```
-2. Запустите скрипт сборки:
+2. Запустите сборку нужного режима::
 ```bash
 ./scripts/ne10_build_armv7a_hard.sh
-```
-или
-```bash
 ./scripts/ne10_build_armv8a_hard.sh
 ```
 
@@ -79,7 +76,7 @@ chmod +x scripts/*.sh
 4. Запустите бенчмарк с параметром количества итераций, например:
 ```bash
 ./bin/ne10_bench_armv7a_hard_float 1000
-./bin/ne10_bench_armv8a_hard_float 1000
+./bin/ne10_bench_armv8a_hard_float 500
 ```
 
 
@@ -117,6 +114,3 @@ N= 32: 14.56 µs/FFT (iters=1000)
 - Ошибки и предложения — через [GitHub Issues](https://github.com/plisius/ne10-arm-cross-builds/issues)
 
 ---
-
-Спасибо, что используете **ne10-arm-cross-builds**!  
-Будем рады вашим отзывам и контрибуциям!
