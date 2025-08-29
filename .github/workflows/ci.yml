@@ -28,9 +28,6 @@ jobs:
       - name: Verify qemu-arm installation
         run: qemu-arm --version
 
-      - name: Copy ne10_bench.c to scripts
-        run: cp ne10_bench.c scripts/
-
       - name: Build ARMv7-A (hard float)
         run: ./scripts/ne10_build_armv7a_hard.sh
 
@@ -73,9 +70,6 @@ jobs:
 
       - name: Verify qemu-aarch64 installation
         run: qemu-aarch64 --version
-
-      - name: Copy ne10_bench.c to scripts
-        run: cp ne10_bench.c scripts/
 
       - name: Build ARMv8-A (hard float)
         run: ./scripts/ne10_build_armv8a_hard.sh
