@@ -58,14 +58,14 @@ jobs:
       - name: Upload ne10_bench_armv7a_hard_fixed binaries
         uses: actions/upload-artifact@v4
         with:
-          name: ne10-fix16-binaries
+          name: ne10-fix16-binaries-armv7
           path: bin/ne10_bench_armv7a_hard_fixed
 
       # фиксированная точка
       - name: Upload ne10_bench_armv7a_hard_fixed logs
         uses: actions/upload-artifact@v4
         with:
-          name: ne10_bench_armv7a_hard_fixed-logs
+          name: ne10-fix16-benchmark-logs-armv7
           path: bin/ne10_bench_armv7a_hard_fixed.log
 
 
