@@ -53,7 +53,6 @@ jobs:
       # фиксированная точка
       - name: Run ne10_fix16 binary and save logs
         run: |
-          chmod +x ./bin/ne10_fix16
           ./bin/ne10_fix16 > ./bin/ne10_fix16.log 2>&1
 
       # фиксированная точка
