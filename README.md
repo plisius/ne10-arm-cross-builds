@@ -64,7 +64,7 @@
 ```bash
 chmod +x scripts/*.sh
 ```
-2. Запустите сборку нужного режима::
+2. Запустите сборку нужного режима:
 ```bash
 ./scripts/ne10_build_armv7a_hard.sh
 ./scripts/ne10_build_armv8a_hard.sh
@@ -73,13 +73,15 @@ chmod +x scripts/*.sh
 
 3. Готовые бинарники и библиотеки появятся в папке `bin/`:
 
-- Для ARMv7: `ne10_bench_armv7a_hard_float`
-- Для ARMv8: `ne10_bench_armv8a_hard_float`
+- Для ARMv7 float: `ne10_bench_armv7a_hard_float`
+- Для ARMv8 float: `ne10_bench_armv8a_hard_float`
+- Для ARMv7 fixed: `ne10_bench_armv7a_hard_float`
 
 4. Запустите бенчмарк с параметром количества итераций, например:
 ```bash
 ./bin/ne10_bench_armv7a_hard_float 1000
 ./bin/ne10_bench_armv8a_hard_float 500
+./bin/ne10_bench_armv7a_hard_fixed 10
 ```
 
 
