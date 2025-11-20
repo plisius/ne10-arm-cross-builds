@@ -46,27 +46,27 @@ jobs:
       # фиксированная точка
       - name: Run ARMv7 hard fixed binary in QEMU
         run: |
-          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_fix16 $ITERATIONS \
-            > bin/ne10_fix16.log 2>&1 || echo "QEMU returned error, but continuing"
+          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_armv7_hard_fixed $ITERATIONS \
+            > bin/ne10_bench_armv7_hard_fixed.log 2>&1 || echo "QEMU returned error, but continuing"
 
       # # фиксированная точка
-      # - name: Run ne10_fix16 binary and save logs
+      # - name: Run ne10_bench_armv7_hard_fixed binary and save logs
       #   run: |
-      #     ./bin/ne10_fix16 > ./bin/ne10_fix16.log 2>&1
+      #     ./bin/ne10_bench_armv7_hard_fixed > ./bin/ne10_bench_armv7_hard_fixed.log 2>&1
 
       # фиксированная точка
-      - name: Upload ne10_fix16 binaries
+      - name: Upload ne10_bench_armv7_hard_fixed binaries
         uses: actions/upload-artifact@v4
         with:
           name: ne10-fix16-binaries
-          path: bin/ne10_fix16
+          path: bin/ne10_bench_armv7_hard_fixed
 
       # фиксированная точка
-      - name: Upload ne10_fix16 logs
+      - name: Upload ne10_bench_armv7_hard_fixed logs
         uses: actions/upload-artifact@v4
         with:
-          name: ne10_fix16-logs
-          path: bin/ne10_fix16.log
+          name: ne10_bench_armv7_hard_fixed-logs
+          path: bin/ne10_bench_armv7_hard_fixed.log
 
 
       - name: Upload ARMv7 binaries

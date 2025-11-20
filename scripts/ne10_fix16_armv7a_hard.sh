@@ -26,7 +26,7 @@ NEON_FLAG="ON"
 FIXED_POINT_FLAG="ON"
 PLATFORM="armv7a"
 
-BUILD_NAME="ne10_fix16"
+BUILD_NAME="ne10_bench_armv7_hard_fixed"
 
 REQUIRED_PKGS=("gcc-arm-linux-gnueabihf" "g++-arm-linux-gnueabihf" "cmake" "git" "build-essential")
 
