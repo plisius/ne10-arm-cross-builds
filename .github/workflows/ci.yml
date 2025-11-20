@@ -43,17 +43,23 @@ jobs:
           qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_armv7a_hard_float $ITERATIONS \
           > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
 
-
       # фиксированная точка
       - name: Run ARMv7 hard fixed binary in QEMU
         run: |
           qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_fix16 $ITERATIONS \
             > bin/ne10_fix16.log 2>&1 || echo "QEMU returned error, but continuing"
 
+      # # фиксированная точка
+      # - name: Run ne10_fix16 binary and save logs
+      #   run: |
+      #     ./bin/ne10_fix16 > ./bin/ne10_fix16.log 2>&1
+
       # фиксированная точка
-      - name: Run ne10_fix16 binary and save logs
-        run: |
-          ./bin/ne10_fix16 > ./bin/ne10_fix16.log 2>&1
+      - name: Upload ne10_fix16 binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ne10-fix16-binaries
+          path: bin/ne10_fix16
 
       # фиксированная точка
       - name: Upload ne10_fix16 logs
