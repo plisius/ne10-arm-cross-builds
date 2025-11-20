@@ -31,6 +31,10 @@ jobs:
       - name: Build ARMv7-A (hard float)
         run: ./scripts/ne10_build_armv7a_hard.sh
 
+      # фиксированная точка
+      - name : Build ARMv7-A (fix hard) 
+        run : scripts/ne10_fix16_armv7a_hard.sh
+
       - name: List files in bin (ARMv7)
         run: ls -la bin/
 
@@ -38,6 +42,26 @@ jobs:
         run: |
           qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_bench_armv7a_hard_float $ITERATIONS \
           > bin/qemu_bench_armv7_hard.log 2>&1 || echo "QEMU returned error, but continuing"
+
+
+      # фиксированная точка
+      - name: Run ARMv7 hard fixed binary in QEMU
+        run: |
+          qemu-arm -L /usr/arm-linux-gnueabihf bin/ne10_fix16 $ITERATIONS \
+            > bin/ne10_fix16.log 2>&1 || echo "QEMU returned error, but continuing"
+
+      # фиксированная точка
+      - name: Run ne10_fix16 binary and save logs
+        run: |
+          ./bin/ne10_fix16 > bin/ne10_fix16.log 2>&1
+
+      # фиксированная точка
+      - name: Upload ne10_fix16 logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ne10_fix16-logs
+          path: bin/ne10_fix16.log
+
 
       - name: Upload ARMv7 binaries
         uses: actions/upload-artifact@v4
